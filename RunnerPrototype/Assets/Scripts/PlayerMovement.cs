@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float gravity = 20.0f;
     public float jumpSpeed = 8.0f;
+    public bool runAutomatically = true;
     public float speed = 6.0f;
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
             // We are grounded, so recalculate
             // move direction directly from axes
 
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+            moveDirection = new Vector3(Input.GetAxis("Horizontal") * -1, 0.0f, runAutomatically ? 1 : Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection = moveDirection * speed;
 
