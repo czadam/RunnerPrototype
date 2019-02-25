@@ -16,10 +16,10 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Obstacle
+  - Boulder
   - 
   - 
   - 
