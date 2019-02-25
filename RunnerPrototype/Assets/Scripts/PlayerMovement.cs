@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6.0f;
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+    }
 
     private void Start()
     {
@@ -24,6 +29,18 @@ public class PlayerMovement : MonoBehaviour
         {
             // We are grounded, so recalculate
             // move direction directly from axes
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 2))
+            {
+                if (hit.transform.gameObject.CompareTag("Ground"))
+                {
+                    Debug.Log("Adjust rotation");
+                    var toRotation = Quaternion.LookRotation(hit.transform.up);
+                    //TODO: use different speed component
+                    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, speed * Time.deltaTime);
+                }
+            }
 
             moveDirection = new Vector3(Input.GetAxis("Horizontal") * -1, 0.0f, runAutomatically ? 1 : Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
