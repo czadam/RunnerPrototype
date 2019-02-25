@@ -11,8 +11,12 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("FallCollider"))
+        {
+            GameManager.Instance().EndGame();
+        }
     }
 
     private void Start()
