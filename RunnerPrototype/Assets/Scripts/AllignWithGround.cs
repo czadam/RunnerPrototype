@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AllignWithGround : MonoBehaviour
 {
-    public float rayLength = 5f;
     public float speed;
 
     private Vector3 dir = Vector3.forward;

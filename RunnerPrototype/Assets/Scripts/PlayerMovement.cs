@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("Boulder"))
+        if (hit.gameObject.layer == LayerMask.NameToLayer("Boulder"))
         {
             GameManager.Instance().EndGame();
         }
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("OnTriggerEnter: " + other.name);
 
-        if (other.gameObject.CompareTag("FallCollider"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("FallCollider"))
         {
             GameManager.Instance().EndGame();
         }
@@ -32,18 +32,12 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-
-        // let the gameObject fall down
-        //gameObject.transform.position = new Vector3(0, 5, 0);
     }
 
     private void Update()
     {
         if (controller.isGrounded)
         {
-            // We are grounded, so recalculate
-            // move direction directly from axes
-
             moveDirection = new Vector3(Input.GetAxis("Horizontal") * -1, 0.0f, runAutomatically ? 1 : Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection = moveDirection * speed;
