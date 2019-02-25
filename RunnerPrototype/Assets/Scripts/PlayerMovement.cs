@@ -11,8 +11,18 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Boulder"))
+        {
+            GameManager.Instance().EndGame();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OnTriggerEnter: " + other.name);
+
         if (other.gameObject.CompareTag("FallCollider"))
         {
             GameManager.Instance().EndGame();
